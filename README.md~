@@ -15,9 +15,3 @@ Ceci est un programme permettant la manipulation d'image realisé en java dans l
 	-sauvegarder/exporter
 	-Remplissage zone de selection
 	-Onglets images
-	
-#Pour lancer le programme:
-Dans un terminal, a la racine du dossier du programme tapez:
-	-"cd classes"
-		puis
-	-"java UI"
