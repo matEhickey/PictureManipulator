@@ -192,12 +192,13 @@ public class ImagePix extends JPanel
 							}
 						}
 						
-						//trace les ligne de selection
-						g.drawLine(selection[0]*pixelSize,selection[1]*pixelSize,selection[0]*pixelSize,selection[3]*pixelSize);
-						g.drawLine(selection[2]*pixelSize,selection[1]*pixelSize,selection[2]*pixelSize,selection[3]*pixelSize);
-						g.drawLine(selection[0]*pixelSize,selection[1]*pixelSize,selection[2]*pixelSize,selection[1]*pixelSize);
-						g.drawLine(selection[0]*pixelSize,selection[3]*pixelSize,selection[2]*pixelSize,selection[3]*pixelSize);
-						
+						//trace les ligne de selection, si contenu dans la zone d'affichage
+						if((Math.max(selection[0],selection[2])<width)&&(Math.max(selection[1],selection[3])<height)){
+								g.drawLine(selection[0]*pixelSize,selection[1]*pixelSize,selection[0]*pixelSize,selection[3]*pixelSize);
+								g.drawLine(selection[2]*pixelSize,selection[1]*pixelSize,selection[2]*pixelSize,selection[3]*pixelSize);
+								g.drawLine(selection[0]*pixelSize,selection[1]*pixelSize,selection[2]*pixelSize,selection[1]*pixelSize);
+								g.drawLine(selection[0]*pixelSize,selection[3]*pixelSize,selection[2]*pixelSize,selection[3]*pixelSize);
+						}
 						
 					}
 					catch(Exception e){

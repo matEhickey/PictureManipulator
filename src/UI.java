@@ -158,6 +158,8 @@ public class UI extends JPanel{
 			);
 			this.add(coloration);
 			
+			this.add(new Rogner(imagePix));
+			
 	}
 	
 	

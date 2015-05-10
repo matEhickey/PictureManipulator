@@ -71,7 +71,7 @@ public class Coloration extends JPanel implements Comportement{
 						}
 					}
 					Coloration.this.imagePix.actualise();
-					Coloration.this.colorFrame.setVisible(false);
+					Coloration.this.colorframe.setVisible(false);
 			}
 		});
 		this.add(annuler);
