@@ -159,6 +159,14 @@ public class UI extends JPanel{
 			this.add(coloration);
 			
 			this.add(new Rogner(imagePix));
+			JButton contraste = new JButton("Contraste");
+			contraste.addActionListener(new ActionListener(){
+				public void actionPerformed(ActionEvent e){
+					new Contraste(UI.this.imagePix);
+				}
+			});
+			this.add(contraste);
+			
 			
 	}
 	
