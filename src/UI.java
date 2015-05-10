@@ -147,6 +147,17 @@ public class UI extends JPanel{
 			coller.setEnabled(false);//<----set clickable = setEnabled
 			this.add(copyPaste);
 			
+			
+			JButton coloration = new JButton("Coloration Partielle");
+			coloration.addActionListener(
+				new ActionListener(){
+					public void actionPerformed(ActionEvent e){
+						new Coloration(UI.this.imagePix);
+					}
+				}
+			);
+			this.add(coloration);
+			
 	}
 	
 	
@@ -253,7 +264,6 @@ public class UI extends JPanel{
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		fImage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//fImage.setSize(800,1000);
-		f.setSize(300,350);
 		try{
 			ImagePix im;
 			if(args.length == 0 ){
@@ -268,6 +278,7 @@ public class UI extends JPanel{
 			UI ui = new UI(im);
 			ui.setFrame(fImage);
 			f.add(ui);
+			f.pack();
 		}
 		catch(Exception e){
 			System.out.println(e);
