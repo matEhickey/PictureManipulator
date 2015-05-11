@@ -56,7 +56,7 @@ public class Rogner extends JButton implements Comportement{
 		imagePix.width = Math.abs(imagePix.selection[2]-imagePix.selection[0]);
 		imagePix.height = Math.abs(imagePix.selection[1]-imagePix.selection[3]);
 		imagePix.actualise();
-		
+		imagePix.frame.setSize(imagePix.width*imagePix.pixelSize, imagePix.height*imagePix.pixelSize);
 	}
 
 }

@@ -1,0 +1,91 @@
+import java.awt.*;
+import javax.swing.*;
+import javax.swing.event.*;
+import java.awt.event.*;
+import java.util.*;
+import java.lang.*;
+
+//definit le comportement contraste:
+//	si contraste maximum -> chaque pixel devient ou blanc ou noir en fonction de son intensité
+//  si contraste minimum -> chaque pixel devient gris
+
+public class Contours extends JPanel implements Comportement{
+	private JFrame frame;
+	private ImagePix imagePix;
+	private JSlider slide;
+	private int [][][] oldImage;
+	
+	public Contours(ImagePix im){
+		super();
+		
+		imagePix = im;
+		
+		oldImage = new int[imagePix.width][imagePix.height][3];
+		
+		//stockage image debut
+		for(int i = 0;i<imagePix.width;i++){
+			for(int j=0;j<imagePix.height;j++){
+				for(int x = 0; x<3;x++){
+					oldImage[i][j][x]=imagePix.image[i][j][x];
+				}
+			}
+		}
+		
+		imagePix = im;
+		frame = new JFrame("Contours");
+		
+		slide = new JSlider(0,255);
+		slide.addChangeListener(new ChangeListener(){
+			public void stateChanged(ChangeEvent e) {
+          		  Contours.this.agir();
+        }
+		});
+		agir();
+		this.add(slide);
+		frame.add(this);
+		frame.pack();
+		frame.setVisible(true);
+	}
+	
+	public void agir(){
+		int [][]tamp = new int[imagePix.width][imagePix.height];
+		int moyenne;
+		for(int i =1;i<imagePix.width-1;i++){
+				for(int j=1;j<imagePix.height-1;j++){//pour chaque couleur de pixel
+					moyenne = 0;
+						for(int x = 0; x<3;x++){
+							moyenne += oldImage[i][j][x];
+						}
+						tamp[i][j] = moyenne/3;
+				}
+		}
+		
+		for(int i =1;i<imagePix.width-1;i++){
+				for(int j=1;j<imagePix.height-1;j++){//pour chaque couleur de pixel
+					
+							if(Math.abs(oldImage[i-1][j]-oldImage[i+1][j])>slide.getValue()){
+									tamp[i][j][x] = 255;
+							}
+							else if(Math.abs(oldImage[i][j-1]-oldImage[i][j+1])>slide.getValue()){
+								 	tamp[i][j][x] = 255;
+							}
+							else {
+									tamp[i][j][x] = 0;
+							}
+						
+				}
+		}
+		
+		for(int i =0;i<imagePix.width;i++){
+				for(int j=0;j<imagePix.height;j++){
+					for(int x = 0; x<3;x++){
+						imagePix.image[i][j][x] = tamp[i][j][x];
+					}
+				}
+		}
+		imagePix.actualise();
+		
+	}
+	
+	
+}

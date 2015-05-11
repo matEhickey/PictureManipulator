@@ -11,6 +11,8 @@ import java.util.*;
 public class UI extends JPanel{
 	private ImagePix imagePix;
 	JSlider slide;
+	private JTextField filenameField;
+	private String filename;
 	
 	
 	
@@ -82,6 +84,7 @@ public class UI extends JPanel{
                 //nouvelle taille et actualise
                 UI.this.imagePix.pixelSize = UI.this.slide.getValue()/100;
                 UI.this.imagePix.actualise();
+                UI.this.imagePix.frame.setSize(UI.this.imagePix.width*UI.this.imagePix.pixelSize, UI.this.imagePix.height*UI.this.imagePix.pixelSize);
             }
         });
         
@@ -159,6 +162,8 @@ public class UI extends JPanel{
 			this.add(coloration);
 			
 			this.add(new Rogner(imagePix));
+			
+			
 			JButton contraste = new JButton("Contraste");
 			contraste.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent e){
@@ -166,6 +171,62 @@ public class UI extends JPanel{
 				}
 			});
 			this.add(contraste);
+			
+			JButton contours = new JButton("Detection Contours");
+			contours.addActionListener(new ActionListener(){
+				public void actionPerformed(ActionEvent e){
+					new Contours(UI.this.imagePix);
+				}
+			});
+			this.add(contours);
+			
+			//text field ou on tape le nom du fichier pour l'ouvrir ou l'enregistrer
+			filenameField = new JTextField();
+			filenameField.addCaretListener(new CaretListener() {
+            public void caretUpdate(CaretEvent e) {
+                UI.this.filename=UI.this.filenameField.getText();
+            }
+        });
+			this.add(filenameField);
+			
+			//bouton ouvrir
+			//ouvre le fichier et extrait l'objet imagePix
+			JButton ouvrir = new JButton("Ouvrir");
+			ouvrir.addActionListener(new ActionListener(){
+				public void actionPerformed(ActionEvent e){
+					try{
+						File fichier =  new File("../Sauvegardes/"+UI.this.filename+".ser");
+					 // ouverture d'un flux sur un fichier
+						ObjectInputStream ois =  new ObjectInputStream(new FileInputStream(fichier)) ;
+						 // désérialization de l'objet
+						UI.this.imagePix.load((ImagePix)ois.readObject());
+						UI.this.imagePix.actualise();
+					}
+					catch(Exception except){
+						System.out.println(except);
+					}
+				}
+			});
+			this.add(ouvrir);
+			
+			//sauvegarde, 
+			//serialize et enregistre dans un fichier
+			JButton sauvegarde = new JButton("Sauvegarde");
+			sauvegarde.addActionListener(new ActionListener(){
+				public void actionPerformed(ActionEvent e){
+					try{
+						File fichier =  new File("../Sauvegardes/"+UI.this.filename+".ser");
+						 // ouverture d'un flux sur un fichier
+						ObjectOutputStream oos =  new ObjectOutputStream(new FileOutputStream(fichier)) ;
+						 // sérialization de l'objet
+						oos.writeObject(UI.this.imagePix);
+					}
+					catch(Exception except){
+						System.out.println(except);
+					}
+				}
+			});
+			this.add(sauvegarde);
 			
 			
 	}
@@ -277,10 +338,10 @@ public class UI extends JPanel{
 		try{
 			ImagePix im;
 			if(args.length == 0 ){
-					im = new ImagePix(ImageIO.read(new File("../Images/yoo.jpg")));
+					im = new ImagePix(ImageIO.read(new File("../Images/yoo.jpg")),fImage);
 			}
 			else{
-					im = new ImagePix(ImageIO.read(new File(args[0])));
+					im = new ImagePix(ImageIO.read(new File(args[0])),fImage);
 			}
 			//JScrollPane myJScrollPane = new JScrollPane();
          //myJScrollPane.add(im);
@@ -289,6 +350,7 @@ public class UI extends JPanel{
 			ui.setFrame(fImage);
 			f.add(ui);
 			f.pack();
+			
 		}
 		catch(Exception e){
 			System.out.println(e);

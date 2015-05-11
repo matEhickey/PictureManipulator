@@ -6,18 +6,22 @@ Ceci est un programme permettant la manipulation d'image realisé en java dans l
 	-Generateur de normal map  --WIP
 	-Ajout/Retrait de luminosité
 	-Ajout d'ambiance (RGB)
+	-Contraste
+	-Detection de contours
+	-Coloration zone selectionné
+	-Rogner
+	-Sauvegarder/Reprendre fichier sauvegarder
 
 #Les fonctionnalités en cours:
 	-Copier/coller d'apres une selection
-	-Anticrenelage
 
 #Les A-faire:
-	-sauvegarder/exporter
-	-Remplissage zone de selection
+	-Exporter
+	-debug sauvegarde
 	-Onglets images
 	
 #Pour lancer le programme:
 Dans un terminal, a la racine du dossier du programme tapez:
 	-"cd classes"
 		puis
-	-"java UI"
+	-"java UI" ou "java UI 'chemin de votre image' "

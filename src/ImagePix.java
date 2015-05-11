@@ -6,9 +6,9 @@ import javax.imageio.*;
 import java.awt.event.*;
 import java.util.*;
 
-public class ImagePix extends JPanel
+public class ImagePix extends JPanel implements Serializable
 {
-
+		public JFrame frame;
     public int width;
     public int height;
     private boolean hasAlphaChannel;
@@ -25,7 +25,7 @@ public class ImagePix extends JPanel
     public int tailleSelectY;
     
     
-    public boolean anticrenelage;
+    //public boolean anticrenelage;
     public boolean reverse;
     public boolean normalMap;
     public boolean grey;
@@ -38,14 +38,15 @@ public class ImagePix extends JPanel
     public int morered;
     public int moregreen;
 
-    public ImagePix(BufferedImage imagePix)
-    {
+    public ImagePix(BufferedImage imagePix,JFrame frame)
+    {	
+    		this.frame = frame;
 				reverse = false;
 				normalMap = false;
 				grey = false;
 				pixelSize = 5;
 
-				anticrenelage = false;
+				
 				
 				selection = new int[4];
 				
@@ -88,6 +89,19 @@ public class ImagePix extends JPanel
 				});
 					
 
+    }
+    
+    public void load(ImagePix oth){
+    	for(int i =0;i<oth.width;i++){
+					for(int j =0;j<oth.height;j++){
+						for(int z =0;z<3;z++){
+							image[i][j][z] = oth.image[i][j][z];
+						}
+					}
+			}
+			width=oth.width;
+			height=oth.height;
+			actualise();
     }
 
    
